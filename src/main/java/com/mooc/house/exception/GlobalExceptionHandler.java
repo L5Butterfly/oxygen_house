@@ -1,9 +1,13 @@
 package com.mooc.house.exception;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
 
@@ -15,6 +19,8 @@ import com.alibaba.fastjson.JSONObject;
  * @date: 2018年10月5日 下午10:17:38
  * @version: v1.0
  */
+
+//开启全局捕获异常
 @ControllerAdvice
 public class GlobalExceptionHandler extends Exception {
 	
@@ -25,7 +31,11 @@ public class GlobalExceptionHandler extends Exception {
 	
 	private final Logger logger= LoggerFactory.getLogger(GlobalExceptionHandler.class);
 	
-	//可以直接写@ExceptionHandler,不指明异常类，会自动映射,//还可以声明接收其他任意参数
+	/**
+	 * 可以直接写@ExceptionHandler,不指明异常类，会自动映射,//还可以声明接收其他任意参数
+	 * @param exception
+	 * @return
+	 */
  	@ExceptionHandler(CustomException.class)
     public String customGenericExceptionHnadler(CustomException exception){ 
  		JSONObject json=new JSONObject();
@@ -36,7 +46,11 @@ public class GlobalExceptionHandler extends Exception {
     }
 
  	
- 	//可以直接写@EceptionHandler，IOExeption继承于Exception
+ 	/**
+ 	 * 可以直接写@EceptionHandler，IOExeption继承于Exception
+ 	 * @param exception
+ 	 * @return
+ 	 */
     @ExceptionHandler(BusinessException.class)
     public String allExceptionHandler(BusinessException exception){
     	JSONObject json=new JSONObject();
@@ -47,7 +61,11 @@ public class GlobalExceptionHandler extends Exception {
     }
     
     
-    //未知异常处理
+    /**
+     * 未知异常处理
+     * @param exception
+     * @return
+     */
     @ExceptionHandler(value={Exception.class,RuntimeException.class})
     public String allExceptionHandler(Exception exception){
     	JSONObject json=new JSONObject();
@@ -56,4 +74,20 @@ public class GlobalExceptionHandler extends Exception {
  		logger.info("exception msg:-----"+json.toJSONString());
         return null;
     }
+    
+
+    /**
+     * 如果是跳转到错误页面就直接写页面地址，返回String跳转到页面。
+     * @return
+     */
+    @ExceptionHandler(RuntimeException.class)//拦截所有运行时异常
+    @ResponseBody //ResponseBody返回json。
+    public Map<String ,Object> errorMap(){
+        Map<String,Object> result=new HashMap<String ,Object>();
+        result.put("errorCode","500");
+        result.put("errorMsg","系统异常");
+        logger.info("exception info:-----"+result);
+        return result;
+    }
+ 
 }
