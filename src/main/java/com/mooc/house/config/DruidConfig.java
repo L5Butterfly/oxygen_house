@@ -22,7 +22,7 @@ import com.google.common.collect.Lists;
  * @version: v1.0
  */
 
-@Configuration
+//@Configuration
 public class DruidConfig {
 	
 	/**
