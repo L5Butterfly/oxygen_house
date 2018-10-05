@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.alibaba.fastjson.JSONObject;
+import com.mooc.house.exception.BusinessException;
 import com.mooc.house.model.User;
 import com.mooc.house.service.UserService;
 
@@ -48,7 +49,12 @@ public class UserController {
 	 */
 	//@RequestMapping(value="user",method = RequestMethod.GET)
 	@GetMapping("getUsers")
-	public List<User> getUesrs() {
+	public List<User> getUesrs() throws Exception{
+		//抛出异常
+		int flag=0;
+		if(flag<1){
+			throw new BusinessException("303", "业务异常");
+		}
 		return userService.getUesrs();
 	}
 	
