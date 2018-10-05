@@ -1,8 +1,0 @@
-学习记录：
-
-1. 数据库连接池的使用
-2. spring boot 整合freemarker 使用
-2.1 freemarker的基础配置
-2.2 freemarker模板使用demo
-3. 
-

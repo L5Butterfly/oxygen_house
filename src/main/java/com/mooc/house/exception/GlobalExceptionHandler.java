@@ -1,5 +1,6 @@
 package com.mooc.house.exception;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -80,9 +81,9 @@ public class GlobalExceptionHandler extends Exception {
      * 如果是跳转到错误页面就直接写页面地址，返回String跳转到页面。
      * @return
      */
-    @ExceptionHandler(RuntimeException.class)//拦截所有运行时异常
-    @ResponseBody //ResponseBody返回json。
-    public Map<String ,Object> errorMap(){
+    @ExceptionHandler(IOException.class)//拦截所有运行时异常
+    //@ResponseBody //ResponseBody返回json。
+    public Map<String,Object> errorMap(){
         Map<String,Object> result=new HashMap<String ,Object>();
         result.put("errorCode","500");
         result.put("errorMsg","系统异常");
